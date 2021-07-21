@@ -6,7 +6,7 @@ import * as AWS from '../../../../aws';
 const router: Router = Router();
 
 // Get all feed items
-// This route is not the root directory, it's actually: api/v0/feed/routes
+// This route is not the root path, it's actually: api/v0/feed/
 // because of the steps that a request took to get here.
 router.get('/', async (req: Request, res: Response) => {
     const items = await FeedItem.findAndCountAll({order: [['id', 'DESC']]});
@@ -20,6 +20,25 @@ router.get('/', async (req: Request, res: Response) => {
 
 //@TODO
 //Add an endpoint to GET a specific resource by Primary Key
+router.get('/:id', async (req: Request, res: Response) => {
+    const id = parseInt(req.params.id);
+
+    let matchedResource: FeedItem;
+
+    // Check the ID is valid
+    if (! Number.isNaN(id)) {
+        matchedResource = await FeedItem.findByPk(id);
+        if (matchedResource && matchedResource.url) {
+            matchedResource.url = AWS.getGetSignedUrl(matchedResource.url);
+            res.send(matchedResource);
+        } else {
+            res.status(404).send({message: "Feed item not found"});
+        }
+       
+    } else {
+        res.status(400).send({message: "Invalid feed item ID"});
+    }
+});
 
 // update a specific resource
 router.patch('/:id',
