@@ -34,7 +34,7 @@ router.get('/:id', async (req: Request, res: Response) => {
         } else {
             res.status(404).send({message: "Feed item not found"});
         }
-       
+
     } else {
         res.status(400).send({message: "Invalid feed item ID"});
     }
@@ -45,7 +45,34 @@ router.patch('/:id',
     requireAuth,
     async (req: Request, res: Response) => {
         //@TODO try it yourself
-        res.send(500).send("not implemented")
+        // res.status(500).send("not implemented")
+
+        // Get response ready
+        let responseCode = 200;
+        let response = {};
+
+        // Check the ID exists and is a number
+        const id = parseInt(req.params.id);
+        const newData = req.body;
+
+        if (Number.isNaN(id)) {
+            responseCode = 400;
+            response = {message: "invalid id"};
+        } else if (!newData.caption && !newData.url) {
+            responseCode = 400;
+            response = {message: "invalid data"};
+        } else {
+            const matchingRecord = await FeedItem.findByPk(id);
+            if (!matchingRecord) {
+                responseCode = 404;
+                response = {message: `no matching record with id "${id}"`};
+            } else {
+                const updatedRecords = await FeedItem.update(newData, {where: {id: id}});
+                response = {message: `update rows: ${updatedRecords}`};
+            }
+        }
+        res.status(responseCode).send(response);
+        // res.status(500).send("not implemented")
 });
 
 
@@ -59,7 +86,7 @@ router.get('/signed-url/:fileName',
 });
 
 // Post meta data and the filename after a file is uploaded
-// NOTE the file name is they key name in the s3 bucket.
+// NOTE the file name is the key name in the s3 bucket.
 // body : {caption: string, fileName: string};
 router.post('/',
     requireAuth,
