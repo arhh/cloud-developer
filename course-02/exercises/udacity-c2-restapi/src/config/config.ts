@@ -1,3 +1,5 @@
+// Database and JWT configuration. It can be imported and references inside any
+// source file
 export const config = {
   "postgres": {
       "username": "postgres",

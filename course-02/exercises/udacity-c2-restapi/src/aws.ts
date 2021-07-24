@@ -4,6 +4,7 @@ import { config } from './config/config';
 const c = config.dev;
 
 //Configure AWS
+// Handles setting up S3
 var credentials = new AWS.SharedIniFileCredentials({profile: 'default'});
 AWS.config.credentials = credentials;
 
