@@ -77,6 +77,8 @@ router.patch('/:id',
 
 
 // Get a signed url to put a new item in the bucket
+// This will basically give us a doorway in which we can put the file of interest
+// onto S3
 router.get('/signed-url/:fileName',
     requireAuth,
     async (req: Request, res: Response) => {
