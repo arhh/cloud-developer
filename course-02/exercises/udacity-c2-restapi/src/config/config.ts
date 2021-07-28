@@ -2,30 +2,30 @@
 // source file
 export const config = {
   "postgres": {
-      "username": "postgres",
-      "password": "kviF4GgYwxmXeUmiejkE",
-      "database": "udagramahdev",
-      "host": "udagram-ah-dev.cxwke0jeljg7.us-east-1.rds.amazonaws.com",
-      "dialect": "postgres"
+      "username": process.env.POSTGRES_DEV_USERNAME,
+      "password": process.env.POSTGRES_DEV_PASSWORD,
+      "database": process.env.POSTGRES_DEV_DATABASE,
+      "host": process.env.POSTGRES_DEV_HOST,
+      "dialect": process.env.POSTGRES_DIALECT
   },
   "dev": {
-    "username": "postgres",
-    "password": "kviF4GgYwxmXeUmiejkE",
-    "database": "udagramahdev",
-    "host": "udagram-ah-dev.cxwke0jeljg7.us-east-1.rds.amazonaws.com",
-    "dialect": "postgres",
-    "aws_region": "us-east-1",
-    "aws_profile": "default",
-    "aws_media_bucket": "udagram-arhed-dev"
+    "username": process.env.POSTGRES_DEV_USERNAME,
+    "password": process.env.POSTGRES_DEV_PASSWORD,
+    "database": process.env.POSTGRES_DEV_DATABASE,
+    "host": process.env.POSTGRES_DEV_HOST,
+    "dialect": process.env.POSTGRES_DIALECT,
+    "aws_region": process.env.AWS_REGION,
+    "aws_profile": process.env.AWS_PROFILE,
+    "aws_media_bucket": process.env.AWS_MEDIA_BUCKET
   },
   "prod": {
-    "username": "",
-    "password": "",
-    "database": "udagram_prod",
-    "host": "",
-    "dialect": "postgres"
+    "username": process.env.POSTGRES_PROD_USERNAME,
+    "password": process.env.POSTGRES_PROD_PASSWORD,
+    "database": process.env.POSTGRES_PROD_DATABASE,
+    "host": process.env.POSTGRES_PROD_HOST,
+    "dialect": process.env.POSTGRES_DIALECT
   },
   "jwt": {
-    "secret": "jwtsecret"
+    "secret": process.env.JWT_SECRET
    }
 }
